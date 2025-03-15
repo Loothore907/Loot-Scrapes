@@ -1,0 +1,60 @@
+scraper:
+  # General scraping settings
+  rate_limit: 2  # requests per second
+  timeout: 30    # seconds
+  max_retries: 3
+
+  # Browser emulation
+  user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+  
+  # Vendor site patterns
+  patterns:
+    name:
+      - "//h1[contains(@class, 'business-name')]"
+      - "//div[contains(@class, 'store-name')]"
+      - "//title"
+    
+    address:
+      - "//div[contains(@class, 'address')]"
+      - "//div[contains(@class, 'location')]"
+      - "//address"
+    
+    phone:
+      - "//div[contains(@class, 'phone')]"
+      - "//a[contains(@href, 'tel:')]"
+    
+    hours:
+      - "//div[contains(@class, 'hours')]"
+      - "//div[contains(@class, 'schedule')]"
+      - "//div[contains(@class, 'business-hours')]"
+    
+    menu:
+      - "//div[contains(@class, 'menu')]"
+      - "//div[contains(@class, 'products')]"
+      - "//div[contains(@class, 'items')]"
+    
+    deals:
+      - "//div[contains(@class, 'deals')]"
+      - "//div[contains(@class, 'specials')]"
+      - "//div[contains(@class, 'promotions')]"
+
+  # Data cleaning rules
+  cleaning:
+    phone:
+      - pattern: "[^0-9]"
+        replace: ""
+    
+    hours:
+      - pattern: "\\s+"
+        replace: " "
+    
+    prices:
+      - pattern: "[^0-9.]"
+        replace: ""
+
+# crawl4ai specific settings
+crawl4ai:
+  max_depth: 3
+  follow_links: true
+  ai_extraction: true
+  content_type: "cannabis_vendor"
